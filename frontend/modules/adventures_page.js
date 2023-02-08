@@ -91,7 +91,7 @@ function filterFunction(list, filters) {
   let filterListDur;
   
   if(filters.category.length > 0 && filters.duration.length > 0) {
-    let categoryList = filter.category;
+    let categoryList = filters.category;
     
     filterListCat = filterByCategory(list, categoryList);
     let duration = filters.duration;
@@ -100,7 +100,7 @@ function filterFunction(list, filters) {
     return filterByDuration(filterListCat, low, high);
   }
   else if(filters.category.length > 0) {
-    let categoryList = filter.category;
+    let categoryList = filters.category;
     
     filterListCat = filterByCategory(list, categoryList);
     return filterByDuration(filterListCat, low, high)
