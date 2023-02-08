@@ -62,7 +62,7 @@ function filterByDuration(list, low, high) {
   // TODO: MODULE_FILTERS
   // 1. Filter adventures based on Duration and return filtered list
   const filteredDur = list.filter( (advent) => {
-    return parseInt(advent.duration) >= parseInt(low) && parseInt(advent.duration) <= parseInt(high);
+    return advent.duration >= low && advent.duration < high;
   });
 
   return filteredDur;
@@ -87,21 +87,31 @@ function filterFunction(list, filters) {
   // 1. Handle the 3 cases detailed in the comments above and return the filtered list of adventures
   // 1.1 Handling filter by category 
   
-  if(filters["category"].length !== 0){
-    list = filterByCategory(list, filters["category"]);
+  let filterListCat;
+  let filterListDur;
+  
+  if(filters.category.length > 0 && filters.duration.length > 0) {
+    let categoryList = filter.category;
+    
+    filterListCat = filterByCategory(list, categoryList);
+    let duration = filters.duration;
+    let array = duration.split("-");
+    let low = parseInt(array[0]), high = parseInt(array[1]);
+    return filterByDuration(filterListCat, low, high);
   }
-
-  // 1.2 Handling filter by duration
-  if(filters["duration"] !== ""){
-    let range = filters["duration"].split('-');
-    // console.log(range[0], range[1]);
-    list = filterByDuration(list, range[0], range[1]);
-    // console.log(list);
+  else if(filters.category.length > 0) {
+    let categoryList = filter.category;
+    
+    filterListCat = filterByCategory(list, categoryList);
+    return filterByDuration(filterListCat, low, high)
   }
-  // 2. Depending on which filters are needed, invoke the filterByDuration() and/or filterByCategory() methods
-
-
-  // Place holder for functionality to work in the Stubs
+  else if(filter.duration.length > 0) {
+    let duration = filters.duration;
+    let array = duration.split("-");
+    let low = parseInt(array[0]), high = parseInt(array[1]);
+    return filterByDuration(filterListCat, low, high)
+  }
+ 
   return list;
 }
 
@@ -132,23 +142,15 @@ function generateFilterPillsAndUpdateDOM(filters) {
   // TODO: MODULE_FILTERS
   // 1. Use the filters given as input, update the Duration Filter value and Generate Category Pills
   
-  filters["category"].forEach((cat) => {
+  let category = filters['category']
 
-    let wrap = document.createElement("div");
-    wrap.setAttribute("class", "d-flex");
-    wrap.classList.add("category-filter");
-    const div = document.createElement("div");
-    div.textContent = cat;
-    let x = document.createElement("button");
-    x.classList.add("btn", "pe-0", "pt-0");
-    x.setAttribute("id", cat.toLowerCase());
-    x.setAttribute("onclick", "removeCategory(event)");
-    x.innerHTML = 'x';
-    wrap.append(div);
-    wrap.append(x);
-
-    document.getElementById("category-list").appendChild(wrap);
-  });
+  for(let i = 0; i < category.length; i++){
+    let el = document.createElement('div')
+    el.setAttribute('class', 'category-filter')
+    el.setAttribute('id', 'category-filter-dom')
+    el.innerHTML = category[i]
+    document.getElementById('category-list').append(el)
+  }
 
 }
 export {
