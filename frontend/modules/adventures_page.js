@@ -103,13 +103,14 @@ function filterFunction(list, filters) {
     let categoryList = filters.category;
     
     filterListCat = filterByCategory(list, categoryList);
-    return filterByDuration(filterListCat, low, high)
+    return filterListCat;
   }
   else if(filters.duration.length > 0) {
     let duration = filters.duration;
     let array = duration.split("-");
     let low = parseInt(array[0]), high = parseInt(array[1]);
-    return filterByDuration(filterListCat, low, high)
+    filterListDur = filterByDuration(list, low, high);
+    return filterListDur;
   }
  
   return list;
