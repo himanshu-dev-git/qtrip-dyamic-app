@@ -154,6 +154,7 @@
             // document.getElementById("duration-select").selectedIndex = 0;
 
             filters["duration"] = dur;
+            filters["duration"] = filters["duration"].filter(onlyUnique);
 
             generateFilterPillsAndUpdateDOM(filters);
 
