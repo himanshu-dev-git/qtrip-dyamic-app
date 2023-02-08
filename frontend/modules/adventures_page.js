@@ -105,7 +105,7 @@ function filterFunction(list, filters) {
     filterListCat = filterByCategory(list, categoryList);
     return filterByDuration(filterListCat, low, high)
   }
-  else if(filter.duration.length > 0) {
+  else if(filters.duration.length > 0) {
     let duration = filters.duration;
     let array = duration.split("-");
     let low = parseInt(array[0]), high = parseInt(array[1]);
