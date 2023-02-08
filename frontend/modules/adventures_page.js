@@ -120,7 +120,7 @@ function filterFunction(list, filters) {
 function saveFiltersToLocalStorage(filters) {
   // TODO: MODULE_FILTERS
   // 1. Store the filters as a String to localStorage
-  window.localStorage.setItem("filters", JSON.stringify(filters));
+  localStorage.setItem("filters", JSON.stringify(filters));
 
   return true;
 }
@@ -129,7 +129,7 @@ function saveFiltersToLocalStorage(filters) {
 function getFiltersFromLocalStorage() {
   // TODO: MODULE_FILTERS
   // 1. Get the filters from localStorage and return String read as an object
-  let filtersLS = window.localStorage.getItem("filters");
+  let filtersLS = localStorage.getItem("filters");
   // console.log(filtersLS);
   // Place holder for functionality to work in the Stubs
   return JSON.parse(filtersLS);
@@ -143,16 +143,30 @@ function generateFilterPillsAndUpdateDOM(filters) {
   // TODO: MODULE_FILTERS
   // 1. Use the filters given as input, update the Duration Filter value and Generate Category Pills
   
-  let category = filters['category']
-
-  for(let i = 0; i < category.length; i++){
-    let el = document.createElement('div')
-    el.setAttribute('class', 'category-filter')
-    el.setAttribute('id', 'category-filter-dom')
-    el.innerHTML = category[i]
-    document.getElementById('category-list').append(el)
-  }
-
+  let categoryList = document.getElementById("category-list");
+  filters.category.forEach((i) => {
+    let wrap = document.createElement("div");
+    wrap.setAttribute("class", "d-flex");
+    let div = document.createElement("div");
+    wrap.classList.add("category-filter");
+    div.textContent = i;
+    let x = document.createElement("button");
+    x.classList.add("text-warning");
+    x.classList.add("ms-2");
+    x.classList.add("btn");
+    x.classList.add("py-0");
+    x.classList.add("pe-0");
+    x.innerHTML = "x";
+    let id= i.toLowerCase(i);
+    x.setAttribute("id", id)
+    x.setAttribute("onclick", "removeCategory(event)");
+    wrap.append(div);
+    wrap.append(x);
+    categoryList.append(wrap);
+  });
+  
+  let durationArr = ["", "0-2", "2-6", "6-12", "12-99"];
+  document.getElementById("duration-select").selectedIndex = durationArr.indexOf(filters.duration); 
 }
 export {
   getCityFromURL,
