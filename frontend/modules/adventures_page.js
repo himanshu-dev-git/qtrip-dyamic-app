@@ -97,7 +97,8 @@ function filterFunction(list, filters) {
     let duration = filters.duration;
     let array = duration.split("-");
     let low = parseInt(array[0]), high = parseInt(array[1]);
-    return filterByDuration(filterListCat, low, high);
+    filterListDur = filterByDuration(filterListCat, low, high);
+    return filterListDur'
   }
   else if(filters.category.length > 0) {
     let categoryList = filters.category;
