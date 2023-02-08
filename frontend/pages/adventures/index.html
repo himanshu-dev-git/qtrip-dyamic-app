@@ -151,10 +151,10 @@
             // document.getElementById("category-list").textContent = "";
 
             let dur = event.target.value;
-            // document.getElementById("duration-select").selectedIndex = 0;
+            //document.getElementById("duration-select").selectedIndex = 0;
 
             filters["duration"] = dur;
-            filters["duration"] = filters["duration"].filter(onlyUnique);
+            
 
             generateFilterPillsAndUpdateDOM(filters);
 
